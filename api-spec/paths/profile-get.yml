@@ -26,7 +26,8 @@ get:
               email:
                 type: string
                 format: email
-                description: User email
+                nullable: true
+                description: User email (optional)
                 example: john@example.com
               created_at:
                 type: string

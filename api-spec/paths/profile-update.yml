@@ -23,7 +23,8 @@ put:
             email:
               type: string
               format: email
-              description: User email
+              nullable: true
+              description: User email (optional)
               example: john_updated@example.com
   responses:
     '200':
@@ -44,7 +45,8 @@ put:
               email:
                 type: string
                 format: email
-                description: User email
+                nullable: true
+                description: User email (optional)
                 example: john_updated@example.com
               created_at:
                 type: string
