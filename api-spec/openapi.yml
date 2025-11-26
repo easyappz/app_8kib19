@@ -1,0 +1,52 @@
+openapi: 3.0.0
+info:
+  title: Group Chat API
+  version: 1.0.0
+  description: API specification for group chat application
+
+servers:
+  - url: /api
+    description: API server
+
+paths:
+  /auth/register/:
+    $ref: './paths/auth-register.yml'
+  /auth/login/:
+    $ref: './paths/auth-login.yml'
+  /auth/logout/:
+    $ref: './paths/auth-logout.yml'
+  /profile/:
+    get:
+      $ref: './paths/profile-get.yml#/get'
+    put:
+      $ref: './paths/profile-update.yml#/put'
+  /messages/:
+    get:
+      $ref: './paths/messages-list.yml#/get'
+    post:
+      $ref: './paths/messages-create.yml#/post'
+
+components:
+  securitySchemes:
+    TokenAuth:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: Token-based authentication with required prefix 'Token'
+
+  schemas:
+    Error:
+      type: object
+      properties:
+        error:
+          type: string
+          description: Error message
+
+    ValidationError:
+      type: object
+      properties:
+        field_name:
+          type: array
+          items:
+            type: string
+          description: List of validation errors for specific field

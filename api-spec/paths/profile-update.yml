@@ -1,0 +1,80 @@
+put:
+  summary: Update user profile
+  description: Update current user profile information
+  operationId: updateUserProfile
+  x-isSecure: true
+  tags:
+    - Profile
+  security:
+    - TokenAuth: []
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            username:
+              type: string
+              minLength: 3
+              maxLength: 150
+              description: Username
+              example: john_doe_updated
+            email:
+              type: string
+              format: email
+              description: User email
+              example: john_updated@example.com
+  responses:
+    '200':
+      description: Profile updated successfully
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              id:
+                type: integer
+                description: User ID
+                example: 1
+              username:
+                type: string
+                description: Username
+                example: john_doe_updated
+              email:
+                type: string
+                format: email
+                description: User email
+                example: john_updated@example.com
+              created_at:
+                type: string
+                format: date-time
+                description: Account creation timestamp
+                example: 2024-01-15T10:30:00Z
+    '400':
+      description: Validation error
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              username:
+                type: array
+                items:
+                  type: string
+                example: ["A user with that username already exists."]
+              email:
+                type: array
+                items:
+                  type: string
+                example: ["Enter a valid email address."]
+    '401':
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+                example: Authentication credentials were not provided

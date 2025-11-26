@@ -1,0 +1,45 @@
+get:
+  summary: Get user profile
+  description: Retrieve current user profile information
+  operationId: getUserProfile
+  x-isSecure: true
+  tags:
+    - Profile
+  security:
+    - TokenAuth: []
+  responses:
+    '200':
+      description: Profile data retrieved successfully
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              id:
+                type: integer
+                description: User ID
+                example: 1
+              username:
+                type: string
+                description: Username
+                example: john_doe
+              email:
+                type: string
+                format: email
+                description: User email
+                example: john@example.com
+              created_at:
+                type: string
+                format: date-time
+                description: Account creation timestamp
+                example: 2024-01-15T10:30:00Z
+    '401':
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+                example: Authentication credentials were not provided

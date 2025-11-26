@@ -1,0 +1,77 @@
+get:
+  summary: Get chat messages
+  description: Retrieve list of all chat messages
+  operationId: getMessages
+  x-isSecure: true
+  tags:
+    - Messages
+  security:
+    - TokenAuth: []
+  parameters:
+    - name: limit
+      in: query
+      description: Number of messages to return
+      required: false
+      schema:
+        type: integer
+        default: 100
+        example: 50
+    - name: offset
+      in: query
+      description: Number of messages to skip
+      required: false
+      schema:
+        type: integer
+        default: 0
+        example: 0
+  responses:
+    '200':
+      description: Messages retrieved successfully
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              count:
+                type: integer
+                description: Total number of messages
+                example: 150
+              results:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                      description: Message ID
+                      example: 1
+                    text:
+                      type: string
+                      description: Message text content
+                      example: Hello, everyone!
+                    author:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          description: Author user ID
+                          example: 1
+                        username:
+                          type: string
+                          description: Author username
+                          example: john_doe
+                    created_at:
+                      type: string
+                      format: date-time
+                      description: Message creation timestamp
+                      example: 2024-01-15T10:30:00Z
+    '401':
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+                example: Authentication credentials were not provided

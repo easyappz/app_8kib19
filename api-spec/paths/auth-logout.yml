@@ -1,0 +1,30 @@
+post:
+  summary: Logout user
+  description: Invalidate user authentication token
+  operationId: logoutUser
+  x-isSecure: true
+  tags:
+    - Authentication
+  security:
+    - TokenAuth: []
+  responses:
+    '200':
+      description: Logout successful
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                example: Successfully logged out
+    '401':
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+                example: Authentication credentials were not provided

@@ -1,0 +1,63 @@
+post:
+  summary: Login user
+  description: Authenticate user and return token
+  operationId: loginUser
+  x-isSecure: false
+  tags:
+    - Authentication
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - username
+            - password
+          properties:
+            username:
+              type: string
+              description: Username
+              example: john_doe
+            password:
+              type: string
+              description: User password
+              example: securepassword123
+  responses:
+    '200':
+      description: Login successful
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              token:
+                type: string
+                description: Authentication token
+                example: 9944b09199c62bcf9418ad846dd0e4bbdfc6ee4b
+              user:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    description: User ID
+                    example: 1
+                  username:
+                    type: string
+                    description: Username
+                    example: john_doe
+                  email:
+                    type: string
+                    format: email
+                    description: User email
+                    example: john@example.com
+    '400':
+      description: Invalid credentials
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+                example: Invalid credentials

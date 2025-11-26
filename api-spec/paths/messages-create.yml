@@ -1,0 +1,78 @@
+post:
+  summary: Send message
+  description: Create a new chat message
+  operationId: createMessage
+  x-isSecure: true
+  tags:
+    - Messages
+  security:
+    - TokenAuth: []
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - text
+          properties:
+            text:
+              type: string
+              minLength: 1
+              maxLength: 5000
+              description: Message text content
+              example: Hello, everyone!
+  responses:
+    '201':
+      description: Message created successfully
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              id:
+                type: integer
+                description: Message ID
+                example: 1
+              text:
+                type: string
+                description: Message text content
+                example: Hello, everyone!
+              author:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    description: Author user ID
+                    example: 1
+                  username:
+                    type: string
+                    description: Author username
+                    example: john_doe
+              created_at:
+                type: string
+                format: date-time
+                description: Message creation timestamp
+                example: 2024-01-15T10:30:00Z
+    '400':
+      description: Validation error
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              text:
+                type: array
+                items:
+                  type: string
+                example: ["This field is required."]
+    '401':
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+                example: Authentication credentials were not provided

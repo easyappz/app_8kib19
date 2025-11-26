@@ -1,0 +1,81 @@
+post:
+  summary: Register new user
+  description: Create a new user account
+  operationId: registerUser
+  x-isSecure: false
+  tags:
+    - Authentication
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - username
+            - email
+            - password
+          properties:
+            username:
+              type: string
+              minLength: 3
+              maxLength: 150
+              description: Unique username
+              example: john_doe
+            email:
+              type: string
+              format: email
+              description: User email address
+              example: john@example.com
+            password:
+              type: string
+              minLength: 6
+              description: User password
+              example: securepassword123
+  responses:
+    '201':
+      description: User successfully registered
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              id:
+                type: integer
+                description: User ID
+                example: 1
+              username:
+                type: string
+                description: Username
+                example: john_doe
+              email:
+                type: string
+                format: email
+                description: User email
+                example: john@example.com
+              token:
+                type: string
+                description: Authentication token
+                example: 9944b09199c62bcf9418ad846dd0e4bbdfc6ee4b
+    '400':
+      description: Validation error
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              username:
+                type: array
+                items:
+                  type: string
+                example: ["A user with that username already exists."]
+              email:
+                type: array
+                items:
+                  type: string
+                example: ["Enter a valid email address."]
+              password:
+                type: array
+                items:
+                  type: string
+                example: ["This field is required."]
