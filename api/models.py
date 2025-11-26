@@ -6,7 +6,7 @@ from django.contrib.auth.hashers import make_password, check_password
 class Member(models.Model):
     """User model for authentication and authorization"""
     username = models.CharField(max_length=150, unique=True)
-    email = models.EmailField(max_length=254, unique=True)
+    email = models.EmailField(max_length=254, blank=True, null=True)
     password = models.CharField(max_length=128)
     created_at = models.DateTimeField(auto_now_add=True)
 

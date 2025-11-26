@@ -4,7 +4,6 @@ from .models import Member, Message
 
 class MemberRegisterSerializer(serializers.Serializer):
     username = serializers.CharField(min_length=3, max_length=150)
-    email = serializers.EmailField()
     password = serializers.CharField(min_length=6, write_only=True)
 
     def validate_username(self, value):
@@ -12,15 +11,9 @@ class MemberRegisterSerializer(serializers.Serializer):
             raise serializers.ValidationError("A user with that username already exists.")
         return value
 
-    def validate_email(self, value):
-        if Member.objects.filter(email=value).exists():
-            raise serializers.ValidationError("A user with that email already exists.")
-        return value
-
     def create(self, validated_data):
         member = Member(
-            username=validated_data['username'],
-            email=validated_data['email']
+            username=validated_data['username']
         )
         member.set_password(validated_data['password'])
         member.save()
@@ -44,7 +37,7 @@ class MemberProfileSerializer(serializers.ModelSerializer):
         return value
 
     def validate_email(self, value):
-        if Member.objects.filter(email=value).exclude(id=self.instance.id).exists():
+        if value and Member.objects.filter(email=value).exclude(id=self.instance.id).exists():
             raise serializers.ValidationError("A user with that email already exists.")
         return value
 

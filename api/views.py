@@ -38,7 +38,6 @@ class RegisterView(APIView):
             return Response({
                 'id': member.id,
                 'username': member.username,
-                'email': member.email,
                 'token': token.key
             }, status=status.HTTP_201_CREATED)
         

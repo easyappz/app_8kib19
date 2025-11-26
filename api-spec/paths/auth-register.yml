@@ -13,7 +13,6 @@ post:
           type: object
           required:
             - username
-            - email
             - password
           properties:
             username:
@@ -22,11 +21,6 @@ post:
               maxLength: 150
               description: Unique username
               example: john_doe
-            email:
-              type: string
-              format: email
-              description: User email address
-              example: john@example.com
             password:
               type: string
               minLength: 6
@@ -48,11 +42,6 @@ post:
                 type: string
                 description: Username
                 example: john_doe
-              email:
-                type: string
-                format: email
-                description: User email
-                example: john@example.com
               token:
                 type: string
                 description: Authentication token
@@ -69,11 +58,6 @@ post:
                 items:
                   type: string
                 example: ["A user with that username already exists."]
-              email:
-                type: array
-                items:
-                  type: string
-                example: ["Enter a valid email address."]
               password:
                 type: array
                 items:
