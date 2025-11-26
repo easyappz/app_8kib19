@@ -5,14 +5,12 @@ const TOKEN_KEY = 'authToken';
 /**
  * Register new user
  * @param {string} username - Username
- * @param {string} email - Email address
  * @param {string} password - Password
  * @returns {Promise} Response with user data and token
  */
-export const register = async (username, email, password) => {
+export const register = async (username, password) => {
   const response = await instance.post('/api/auth/register/', {
     username,
-    email,
     password,
   });
   

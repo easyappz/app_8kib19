@@ -5,7 +5,6 @@ import './Register.css';
 
 const Register = () => {
   const [username, setUsername] = useState('');
-  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -17,7 +16,7 @@ const Register = () => {
     setLoading(true);
 
     try {
-      await register(username, email, password);
+      await register(username, password);
       navigate('/');
     } catch (err) {
       if (err.response && err.response.data) {
@@ -26,9 +25,6 @@ const Register = () => {
         
         if (errorData.username) {
           errorMessages.push(...errorData.username);
-        }
-        if (errorData.email) {
-          errorMessages.push(...errorData.email);
         }
         if (errorData.password) {
           errorMessages.push(...errorData.password);
@@ -70,22 +66,6 @@ const Register = () => {
               minLength={3}
               maxLength={150}
               placeholder="Введите имя пользователя"
-              disabled={loading}
-            />
-          </div>
-
-          <div className="form-group">
-            <label htmlFor="email" className="form-label">
-              Email
-            </label>
-            <input
-              type="email"
-              id="email"
-              className="form-input"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-              placeholder="Введите email"
               disabled={loading}
             />
           </div>
