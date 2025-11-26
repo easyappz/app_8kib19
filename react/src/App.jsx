@@ -7,6 +7,7 @@ import { Home } from './components/Home';
 import Register from './components/Register';
 import Login from './components/Login';
 import Chat from './components/Chat';
+import Profile from './components/Profile';
 import { isAuthenticated } from './api/auth';
 
 const ProtectedRoute = ({ children }) => {
@@ -18,7 +19,7 @@ function App() {
   useEffect(() => {
     if (typeof window !== 'undefined' && typeof window.handleRoutes === 'function') {
       /** Нужно передавать список существующих роутов */
-      window.handleRoutes(['/', '/register', '/login', '/chat']);
+      window.handleRoutes(['/', '/register', '/login', '/chat', '/profile']);
     }
   }, []);
 
@@ -33,6 +34,14 @@ function App() {
           element={
             <ProtectedRoute>
               <Chat />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/profile"
+          element={
+            <ProtectedRoute>
+              <Profile />
             </ProtectedRoute>
           }
         />
