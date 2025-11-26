@@ -6,12 +6,12 @@ from django.contrib.auth.hashers import make_password, check_password
 class Member(models.Model):
     """User model for authentication and authorization"""
     username = models.CharField(max_length=150, unique=True)
-    email = models.EmailField(unique=True)
+    email = models.EmailField(max_length=254, unique=True)
     password = models.CharField(max_length=128)
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
-        db_table = 'members'
+        db_table = 'api_member'
         ordering = ['-created_at']
 
     def __str__(self):
@@ -48,7 +48,7 @@ class Member(models.Model):
 
 class AuthToken(models.Model):
     """Authentication token model"""
-    key = models.CharField(max_length=40, unique=True, db_index=True)
+    key = models.CharField(max_length=64, unique=True, db_index=True)
     member = models.ForeignKey(
         Member,
         on_delete=models.CASCADE,
@@ -57,7 +57,7 @@ class AuthToken(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
-        db_table = 'auth_tokens'
+        db_table = 'api_authtoken'
         ordering = ['-created_at']
 
     def __str__(self):
@@ -66,7 +66,7 @@ class AuthToken(models.Model):
     @classmethod
     def generate_key(cls):
         """Generate a random token key"""
-        return secrets.token_hex(20)
+        return secrets.token_hex(32)
 
     def save(self, *args, **kwargs):
         if not self.key:
@@ -76,7 +76,7 @@ class AuthToken(models.Model):
 
 class Message(models.Model):
     """Chat message model"""
-    text = models.TextField(max_length=5000)
+    text = models.TextField()
     author = models.ForeignKey(
         Member,
         on_delete=models.CASCADE,
@@ -85,7 +85,7 @@ class Message(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
-        db_table = 'messages'
+        db_table = 'api_message'
         ordering = ['created_at']
 
     def __str__(self):

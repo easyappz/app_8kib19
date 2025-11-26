@@ -22,7 +22,7 @@ class Migration(migrations.Migration):
                 ('created_at', models.DateTimeField(auto_now_add=True)),
             ],
             options={
-                'db_table': 'members',
+                'db_table': 'api_member',
                 'ordering': ['-created_at'],
             },
         ),
@@ -30,12 +30,12 @@ class Migration(migrations.Migration):
             name='AuthToken',
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('key', models.CharField(db_index=True, max_length=40, unique=True)),
+                ('key', models.CharField(db_index=True, max_length=64, unique=True)),
                 ('created_at', models.DateTimeField(auto_now_add=True)),
                 ('member', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='auth_tokens', to='api.member')),
             ],
             options={
-                'db_table': 'auth_tokens',
+                'db_table': 'api_authtoken',
                 'ordering': ['-created_at'],
             },
         ),
@@ -43,12 +43,12 @@ class Migration(migrations.Migration):
             name='Message',
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('text', models.TextField(max_length=5000)),
+                ('text', models.TextField()),
                 ('created_at', models.DateTimeField(auto_now_add=True)),
                 ('author', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='messages', to='api.member')),
             ],
             options={
-                'db_table': 'messages',
+                'db_table': 'api_message',
                 'ordering': ['created_at'],
             },
         ),
